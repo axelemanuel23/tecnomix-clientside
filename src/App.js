@@ -32,7 +32,7 @@ function App() {
   };
 
   const handleButtonClick = () => {
-    axios.get(`${process.env.APIURL}/works/${id}`,{
+    axios.get(process.env.APIURL + "/works/" + id,{
       headers: {
        apikey: process.env.APIKEY
        }
@@ -40,7 +40,7 @@ function App() {
        setWork(response.data.data)
        console.log(response.data.data)
  
-       axios.get(`${process.env.APIURL}/users/${response.data.data.user}`,{
+       axios.get(process.env.APIURL + "/users/" + response.data.data.user,{
        headers: {
        apikey: process.env.APIKEY
        }
