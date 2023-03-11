@@ -74,19 +74,22 @@ const handleDescriptionClose = () => {
       <label htmlFor="id-input"><p>ID:</p></label>
       <input type="text" id="id-input" value={id} onChange={handleIdChange} />
 
-      <button onClick={handleButtonClick}>Consultar</button>
+      <button className='search-button' onClick={handleButtonClick}>Consultar</button>
 
       {
-        !!checkingIsOpen && (<Modal
+        !!checkingIsOpen && (
+        <Modal
         isOpen={checkingIsOpen}
         onRequestClose={handleCheckingClose}
         style={customModalStyles}
         contentLabel="Número de seguridad"
-      >
+      > 
+      <div className='secret-modal'>
         <h2>Número de seguridad</h2>
-        <p>Por favor ingrese el número de seguridad:</p>
-        <input type="text" value={phone} onChange={handleSecretChange} />
-        <button onClick={handleModalSubmit}>Verificar</button>
+        <label htmlFor="secret-input">Por favor ingrese el número de seguridad:</label>
+        <input id="secret-input" type="text" value={phone} onChange={handleSecretChange} />
+        <button className='verify-button' onClick={handleModalSubmit}>Verificar</button>
+      </div>
       </Modal>)
       }
       
@@ -97,22 +100,33 @@ const handleDescriptionClose = () => {
           style={customModalStyles}
           contentLabel="Descripcion"
         >
-          <h2>{id}</h2>
+          <div className='description-modal'>
+          <h2>Servicio N°:</h2>
+          <h3>{id}</h3>
           <ul>
             <li>Descripcion: {work.description}</li>
             <li>Cliente: {user.name}</li>
             <li>Teléfono: {user.phone}</li>
             <li>Fecha de Recepcion: {work.receptionDate}</li>
-            <li>Fecha de entrega: {work.deliveryDate ?? "sin fecha"}</li>
-            <li>En proceso: {(work.finished && "terminado") || "sin terminar"}</li>
-            <li>Precio: {work.price ?? "sin datos"}</li>
+            <li>Accesorios: {work.accesories}</li>
+            <li>En proceso: {(!!work.finished && "Terminado") || "En reparación"}</li>
+            <li>Fecha de entrega: {work.deliveryDate ?? "Sin fecha de entrega"}</li>
+            <li>Entregado: {(!!work.delivered && "Entregado" ) || "Sin entregar"}</li>
+            <li>Precio: {work.price ?? "Sin datos disponibles"}</li>
           </ul>
           {
             !work.finished && (<button onClick={handleDescriptionClose}>Cerrar</button>)
           }
           {
-            !!work.finished && <button>Coordinar Retiro</button> && <button>Coordinar entrega</button>
+            (!!work.finished && !work.deliveryDate) && (<div><button>Coordinar retiro</button> <button>Coordinar entrega</button></div>)
           }
+          {
+            (!!work.deliveryDate && !work.delivered) && (<span>En proceso de entrega/retiro, consulte su fecha y horario seleccionado.</span>)
+          }
+          {
+            !!work.delivered && <span>Producto entregado, gracias por elegirnos!</span>
+          }
+          </div>
         </Modal>)
       }
       

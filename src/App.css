@@ -32,7 +32,40 @@ label {
   margin-bottom: 10px;
 }
 
-button {
+.search-button {
   width: 20%;
   height: 50px;
+}
+
+.secret-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#secret-input {
+  width: 60%;
+  height: 30px;
+  margin: 20px;
+}
+
+h2 {
+  margin: 10px;
+}
+
+.verify-button{
+  width: 30%;
+  height: 30px;
+}
+
+.description-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
