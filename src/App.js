@@ -32,17 +32,17 @@ function App() {
   };
 
   const getAsyncData = (id) => {
-    axios.get(`https://tecnomix-backend-production.up.railway.app/api/v1/works/${id}`,{
+    axios.get(process.env.ORIGIN + `/${id}`,{
      headers: {
-      apikey:"axel"
+      apikey: process.env.APIKEY
       }
     }).then((response) => {
       setWork(response.data.data)
       console.log(response.data.data)
 
-      axios.get(`https://tecnomix-backend-production.up.railway.app/api/v1/users/${response.data.data.user}`,{
+      axios.get(process.env.ORIGIN + `/${response.data.data.user}`,{
      headers: {
-      apikey:"axel"
+      apikey: process.env.APIKEY
       }
     }).then((response) => {
       setUser(response.data.data)
@@ -75,10 +75,10 @@ const handleDescriptionClose = () => {
 
   return (
     <div className='main'>
-      <label htmlFor="id-input">ID:</label>
+      <label htmlFor="id-input"><p>ID:</p></label>
       <input type="text" id="id-input" value={id} onChange={handleIdChange} />
 
-      <button onClick={handleButtonClick}>Enviar consulta</button>
+      <button onClick={handleButtonClick}>Consultar</button>
 
       {
         !!checkingIsOpen && (<Modal
@@ -90,7 +90,7 @@ const handleDescriptionClose = () => {
         <h2>Número de seguridad</h2>
         <p>Por favor ingrese el número de seguridad:</p>
         <input type="text" value={phone} onChange={handleSecretChange} />
-        <button onClick={handleModalSubmit}>Enviar</button>
+        <button onClick={handleModalSubmit}>Verificar</button>
       </Modal>)
       }
       
@@ -111,7 +111,12 @@ const handleDescriptionClose = () => {
             <li>En proceso: {(work.finished && "terminado") || "sin terminar"}</li>
             <li>Precio: {work.price ?? "sin datos"}</li>
           </ul>
-          <button onClick={handleDescriptionClose}>Cerrar</button>
+          {
+            !work.finished && (<button onClick={handleDescriptionClose}>Cerrar</button>)
+          }
+          {
+            !!work.finished && <button>Coordinar Retiro</button> && <button>Coordinar entrega</button>
+          }
         </Modal>)
       }
       
