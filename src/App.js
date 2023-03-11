@@ -31,29 +31,25 @@ function App() {
     setPhone(event.target.value);
   };
 
-  const getAsyncData = (id) => {
-    axios.get(process.env.ORIGIN + `/${id}`,{
-     headers: {
-      apikey: process.env.APIKEY
-      }
-    }).then((response) => {
-      setWork(response.data.data)
-      console.log(response.data.data)
-
-      axios.get(process.env.ORIGIN + `/${response.data.data.user}`,{
-     headers: {
-      apikey: process.env.APIKEY
-      }
-    }).then((response) => {
-      setUser(response.data.data)
-      console.log(response.data.data)
-      setCheckingIsOpen(true)
-    })
-    })
-  }
-
   const handleButtonClick = () => {
-      getAsyncData(id)
+    axios.get(`${process.env.ORIGIN}/works/${id}`,{
+      headers: {
+       apikey: process.env.APIKEY
+       }
+     }).then((response) => {
+       setWork(response.data.data)
+       console.log(response.data.data)
+ 
+       axios.get(`${process.env.ORIGIN}/users/${response.data.data.user}`,{
+       headers: {
+       apikey: process.env.APIKEY
+       }
+     }).then((response) => {
+       setUser(response.data.data)
+       console.log(response.data.data)
+       setCheckingIsOpen(true)
+     })
+     })
  };
 
  const handleCheckingClose = () => {
