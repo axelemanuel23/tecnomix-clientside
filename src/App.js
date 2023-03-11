@@ -34,7 +34,7 @@ function App() {
   const handleButtonClick = () => {
     axios.get("https://tecnomix-backend-production.up.railway.app/api/v1/works/" + id,{
       headers: {
-       apikey: process.env.APIKEY
+       apikey: "axel"
        }
      }).then((response) => {
        setWork(response.data.data)
@@ -42,7 +42,7 @@ function App() {
  
        axios.get("https://tecnomix-backend-production.up.railway.app/api/v1/users/" + response.data.data.user,{
        headers: {
-       apikey: process.env.APIKEY
+       apikey: "axel"
        }
      }).then((response) => {
        setUser(response.data.data)
